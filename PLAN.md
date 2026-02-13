@@ -1,17 +1,15 @@
 # WellVersed — Product & Website Plan
 
 > AI-Powered UEFN Development Platform
+> **Domain:** wellversed.ai
 
 ---
 
 ## 1. Brand Identity
 
-**Primary Name Options (in preference order):**
-- **WellVersed** — Safest from copyright, strong wordplay on Verse (UEFN's scripting language), implies expertise
-- fnForge — Catchy but "fn" ties directly to Fortnite branding, potential trademark risk
-- FortniteForge — Almost certain trademark conflict with Epic Games
+**Name: WellVersed**
 
-**Recommendation: WellVersed** — It's clever, defensible, and immediately signals Verse/UEFN expertise to the target audience without touching Epic's IP.
+Wordplay on Verse (UEFN's scripting language), implies expertise, no trademark risk.
 
 **Tagline Ideas:**
 - "Your UEFN development team, on demand."
@@ -41,16 +39,16 @@ WellVersed is a specialized AI platform purpose-built for UEFN development. It's
 | **Device Configuration Validation** | Analyze in-level device setups, catch misconfigurations, suggest fixes | Pro / Enterprise |
 | **Procedural Level Assistance** | AI-assisted procedural generation of level segments, layouts, and populations | Pro / Enterprise |
 | **Project-Aware QA** | Automated quality checks across your entire project — logic errors, broken references, performance flags | Pro / Enterprise |
-| **Architecture Review** | Senior-dev-level feedback on project structure, Verse patterns, and scalability | Enterprise |
+| **Architecture Review** | Senior-dev-level feedback on project structure, Verse patterns, and scalability | Enterprise (Coming Soon) |
 | **Priority Processing** | Faster response times and higher usage limits | Pro / Enterprise |
-| **Team Collaboration** | Shared workspace, team member seats, project history | Enterprise |
+| **Team Collaboration** | Shared workspace, team member seats, project history | Enterprise (Coming Soon) |
 
 **How we describe the tech (without revealing it):**
 
 > "WellVersed uses proprietary AI models fine-tuned for UEFN workflows, combined with deep project analysis that goes beyond surface-level code reading. We parse, understand, and reason about your actual project structure."
 
-- Never mention: UAssetAPI, MCP, Anthropic, Claude, specific libraries
-- Do mention: "proprietary analysis engine," "project-aware AI," "deep integration," "purpose-built models"
+- **Never mention:** UAssetAPI, MCP, Anthropic, Claude, specific libraries
+- **Do mention:** "proprietary analysis engine," "project-aware AI," "deep integration," "purpose-built models"
 
 ---
 
@@ -68,7 +66,7 @@ The UEFN creator economy ranges from hobbyists to studios earning significant re
 
 WellVersed offers more specialized value than general coding assistants, justifying a premium over Copilot but staying below enterprise dev-tool pricing.
 
-### Recommended Tiers
+### Tiers
 
 #### Free — $0/mo
 - 50 Verse script generations per month
@@ -80,13 +78,13 @@ WellVersed offers more specialized value than general coding assistants, justify
 #### Pro — $29/mo ($24/mo annual)
 - 500 AI operations per month
 - All core features (Verse gen, device validation, procedural assist, QA)
-- Project-aware analysis (user provides project path)
+- Project-aware analysis via companion app
 - Up to 5 projects
 - Standard processing speed
 - Email support
 - **Purpose:** Core revenue driver. Solo creators and small teams.
 
-#### Enterprise — $79/mo ($66/mo annual)
+#### Enterprise — $79/mo ($66/mo annual) — *Coming Soon*
 - Unlimited AI operations
 - Everything in Pro
 - Architecture review
@@ -94,7 +92,7 @@ WellVersed offers more specialized value than general coding assistants, justify
 - Priority processing
 - Dedicated support channel
 - Custom integrations / API access
-- **Purpose:** Studios and professional teams.
+- **Purpose:** Studios and professional teams. Ships after Free + Pro are validated.
 
 ### Revenue Projections (Conservative)
 
@@ -102,8 +100,8 @@ WellVersed offers more specialized value than general coding assistants, justify
 |---|---|---|
 | Free users | 500 | 2,000 |
 | Pro subscribers | 50 | 200 |
-| Enterprise subscribers | 5 | 20 |
-| MRR | $1,845 | $7,380 |
+| Enterprise subscribers | — | 20 |
+| MRR | $1,450 | $7,380 |
 
 **Profitability note:** Primary costs are API compute (Anthropic usage), hosting, and Stripe fees (~2.9% + $0.30). At Pro tier, each user's API cost should stay under $5-8/mo with smart caching and rate limiting, yielding healthy margins.
 
@@ -111,66 +109,132 @@ WellVersed offers more specialized value than general coding assistants, justify
 
 ## 4. Tech Stack
 
-### Frontend
+### Web App (Frontend + Backend)
 - **Framework:** Next.js 14+ (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS + shadcn/ui components
 - **Animations:** Framer Motion
 - **State:** Zustand (lightweight, minimal boilerplate)
 - **Theme:** next-themes (dark/light toggle)
-
-### Backend
 - **API:** Next.js API Routes + tRPC (type-safe client-server)
 - **Auth:** NextAuth.js (GitHub, Google, email/password)
-- **Database:** PostgreSQL via Supabase or PlanetScale
+- **Database:** PostgreSQL via Supabase
 - **ORM:** Prisma
 - **Payments:** Stripe (Checkout + Customer Portal + Webhooks)
 - **Rate Limiting:** Upstash Redis
 
+### Desktop Companion App (Windows)
+- **Framework:** Tauri v2
+  - ~5MB install vs ~150MB+ for Electron
+  - Rust backend for file watching, WebSocket comms, process management
+  - Built-in auto-updater and system tray support
+  - Frontend is web tech (React/TS) — shares UI code with the main site
+- **Role:** Thin secure bridge between local UEFN project files and cloud service
+- **Responsibilities:**
+  - Watch UEFN project directory for changes
+  - Maintain authenticated WebSocket connection to WellVersed cloud
+  - Serve file contents on demand when the cloud AI requests them
+  - Display connection status + notifications via system tray
+  - Auto-update silently
+- **Does NOT do:**
+  - AI processing (all AI stays server-side — protects IP, simplifies updates)
+  - Store sensitive data beyond auth tokens
+  - Modify project files without explicit user action
+
 ### Infrastructure
 - **Hosting:** Vercel (frontend + API routes)
 - **Database:** Supabase (Postgres + Row Level Security)
-- **File Handling:** User provides local project path — no file uploads needed at launch
+- **Companion Distribution:** GitHub Releases or custom installer via wellversed.ai/download
 - **Monitoring:** Vercel Analytics + Sentry
 
 ### AI Service Layer (Black-boxed)
 - Internal API that wraps your UAssetAPI + MCP tooling
 - Exposed to the frontend only through your own API endpoints
+- Cloud service requests project data from companion app via WebSocket
 - Users never see or interact with underlying services directly
 - Rate limited and metered per subscription tier
 
 ---
 
-## 5. Website Pages & Structure
+## 5. Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    wellversed.ai                         │
+│                                                         │
+│  ┌──────────┐  ┌──────────┐  ┌───────────────────────┐ │
+│  │ Landing  │  │ Dashboard│  │ Project Workspace     │ │
+│  │ Page     │  │          │  │ (Chat + Results)      │ │
+│  └──────────┘  └────┬─────┘  └──────────┬────────────┘ │
+│                     │                    │              │
+│              ┌──────┴────────────────────┴──────┐      │
+│              │     Next.js API / tRPC            │      │
+│              │     (Auth, Metering, Routing)     │      │
+│              └──────┬───────────────────┬───────┘      │
+│                     │                   │              │
+│              ┌──────┴──────┐    ┌───────┴────────┐    │
+│              │  Supabase   │    │  AI Service    │    │
+│              │  (Postgres) │    │  Layer         │    │
+│              │  Users,     │    │  (Black-boxed) │    │
+│              │  Projects,  │    │  UAssetAPI +   │    │
+│              │  Usage      │    │  MCP + Models  │    │
+│              └─────────────┘    └───────┬────────┘    │
+│                                         │              │
+└─────────────────────────────────────────┼──────────────┘
+                                          │
+                                   WebSocket (secure)
+                                          │
+                    ┌─────────────────────┴──────────────┐
+                    │     Tauri Companion App (Windows)   │
+                    │                                     │
+                    │  ┌─────────────┐  ┌──────────────┐ │
+                    │  │ File Watcher│  │ System Tray  │ │
+                    │  │ + Indexer   │  │ Status       │ │
+                    │  └─────────────┘  └──────────────┘ │
+                    │                                     │
+                    │  ┌──────────────────────────────┐  │
+                    │  │ UEFN Project Directory       │  │
+                    │  │ (local filesystem)            │  │
+                    │  └──────────────────────────────┘  │
+                    └────────────────────────────────────┘
+```
+
+---
+
+## 6. Website Pages & Structure
 
 ### Public Pages
-1. **Landing Page** (`/`)
-   - Hero: bold headline, tagline, CTA to sign up
-   - Feature showcase (the 6 core capabilities, with visuals)
+1. **Landing / Waitlist Page** (`/`)
+   - Hero: bold headline, tagline, CTA to join waitlist
+   - Feature showcase (core capabilities with visuals)
+   - "How it works" section (3-step: Install companion → Connect project → Start building)
    - Social proof section (placeholder for testimonials / user count)
-   - Pricing preview
+   - Pricing preview (Free + Pro live, Enterprise "Coming Soon")
    - FAQ
    - Footer
 
 2. **Pricing** (`/pricing`)
    - Tier comparison table
    - Feature matrix
+   - Enterprise "Coming Soon" with notify CTA
    - FAQ about billing
    - CTA to sign up / upgrade
 
 3. **Docs** (`/docs`)
-   - Getting started guide
+   - Getting started guide (install companion, connect project)
    - Feature deep-dives
    - Verse scripting reference
-   - API docs (Enterprise)
    - Changelog
 
-4. **Blog** (`/blog`) — optional at launch
-   - UEFN tips, updates, case studies
+4. **Download** (`/download`)
+   - Companion app installer for Windows
+   - System requirements
+   - Installation guide
 
 ### Authenticated Pages
 5. **Dashboard** (`/dashboard`)
    - Project overview
+   - Companion app connection status
    - Usage stats (operations used / remaining)
    - Quick actions (new analysis, new script, etc.)
 
@@ -183,8 +247,7 @@ WellVersed offers more specialized value than general coding assistants, justify
 7. **Settings** (`/dashboard/settings`)
    - Account management
    - Subscription / billing (Stripe Customer Portal)
-   - Team management (Enterprise)
-   - API keys (Enterprise)
+   - Companion app management (connected devices)
 
 8. **Auth Pages**
    - Sign in (`/login`)
@@ -193,16 +256,18 @@ WellVersed offers more specialized value than general coding assistants, justify
 
 ---
 
-## 6. User Flow
+## 7. User Flow
 
 ```
-Landing Page → Sign Up → Onboarding (connect project path)
+wellversed.ai → Join Waitlist → Get Invite Code
+    → Sign Up → Download Companion App → Install
+        → Open Companion → Point to UEFN project directory
+            → Companion connects to WellVersed cloud
     → Dashboard → Select/Create Project
         → Workspace: Chat with AI about your project
             ├── Generate Verse scripts
             ├── Validate device configs
             ├── Run QA checks
-            ├── Get architecture feedback
             └── Procedural generation assist
         → View results, copy code, export reports
     → Settings → Manage subscription via Stripe
@@ -210,59 +275,90 @@ Landing Page → Sign Up → Onboarding (connect project path)
 
 ---
 
-## 7. Key Technical Decisions
+## 8. Launch Strategy
 
-1. **Project path, not file upload** — Users provide their local UEFN project path. The service connects to analyze it. This avoids massive file uploads and keeps the UX fast.
+### Phase 0 — Waitlist (Pre-Launch)
+- Landing page live on wellversed.ai
+- Waitlist form collects: email, UEFN experience level, team size, what they build
+- Discord server live — link from waitlist confirmation email
+- Use waitlist data to prioritize invites (power users first = better feedback)
+- Target channels: UEFN subreddits, Fortnite Creative Discord servers, YouTube/Twitch UEFN creators
 
-2. **Black-boxed AI layer** — All AI/analysis logic lives behind your own API. The frontend calls `/api/analyze`, `/api/generate`, etc. The implementation details (UAssetAPI, MCP, Anthropic) are never exposed to the client.
+### Invite Waves
+- Wave 1: 20 users — stress test, gather critical feedback
+- Wave 2: 50 users — validate pricing, test companion app at scale
+- Wave 3: 200 users — public beta readiness check
+- Open launch after Wave 3 stability
 
-3. **Metered usage via middleware** — Every AI operation decrements from the user's monthly quota. Tracked in the database, enforced in API middleware.
-
-4. **Stripe webhooks for subscription state** — Subscription status lives in your DB, synced via Stripe webhooks. No client-side trust of payment state.
-
-5. **No mobile-first** — This is a developer tool. Desktop-first responsive design. Mobile should work but isn't the priority.
+### Founding Member Perks
+- Users in Waves 1-3 get a permanent **"Founder"** badge on their profile
+- **30% lifetime discount** on Pro tier ($20/mo instead of $29/mo)
+- Creates urgency for the waitlist ("limited founding spots")
+- Early adopters become evangelists
 
 ---
 
-## 8. Launch Priorities (Build Order)
+## 9. Key Technical Decisions
 
-### Phase 1 — Foundation
+1. **Companion app, not file upload** — Tauri v2 desktop app watches the UEFN project locally and serves files to the cloud on demand via WebSocket. No massive uploads, instant access, real-time sync.
+
+2. **Black-boxed AI layer** — All AI/analysis logic lives behind your own API. The frontend calls `/api/analyze`, `/api/generate`, etc. The implementation details are never exposed to the client or the companion app.
+
+3. **Thin companion, fat cloud** — All intelligence stays server-side. The companion is just a secure file bridge. This means you can improve the AI without users ever updating the app.
+
+4. **Metered usage via middleware** — Every AI operation decrements from the user's monthly quota. Tracked in the database, enforced in API middleware.
+
+5. **Stripe webhooks for subscription state** — Subscription status lives in your DB, synced via Stripe webhooks. No client-side trust of payment state.
+
+6. **Desktop-first** — This is a developer tool. Desktop-first responsive design. Mobile should be functional but isn't the priority.
+
+7. **Free + Pro at launch, Enterprise later** — Validate the core product and pricing with two tiers before adding team complexity.
+
+---
+
+## 10. Build Order
+
+### Phase 1 — Foundation (Website)
 - [ ] Next.js project scaffold with TypeScript + Tailwind + shadcn
 - [ ] Dark/light theme system
-- [ ] Landing page
+- [ ] Landing page with waitlist form
 - [ ] Auth system (NextAuth)
-- [ ] Database schema (users, projects, subscriptions, usage)
+- [ ] Database schema (users, projects, subscriptions, usage, waitlist)
 
-### Phase 2 — Core Product
+### Phase 2 — Companion App
+- [ ] Tauri v2 project scaffold
+- [ ] System tray integration
+- [ ] Project directory selector + file watcher
+- [ ] WebSocket client (connects to cloud)
+- [ ] File serving protocol (respond to cloud requests for project data)
+- [ ] Auto-updater
+- [ ] Windows installer / distribution
+
+### Phase 3 — Core Product
 - [ ] Dashboard layout
-- [ ] Project creation flow (provide project path)
+- [ ] Project creation flow (link to companion app)
+- [ ] Companion connection status in dashboard
 - [ ] Workspace UI (chat interface + results panel)
-- [ ] API layer stub (endpoints that will connect to your AI backend)
+- [ ] API layer that bridges frontend ↔ AI service ↔ companion app
 - [ ] Usage metering middleware
 
-### Phase 3 — Monetization
+### Phase 4 — Monetization
 - [ ] Stripe integration (checkout, portal, webhooks)
 - [ ] Tier enforcement (rate limiting per plan)
 - [ ] Pricing page
+- [ ] Invite code system
 
-### Phase 4 — Polish & Launch
-- [ ] Docs site
+### Phase 5 — Polish & Launch
+- [ ] Docs site (getting started, companion install guide)
+- [ ] Download page for companion app
 - [ ] Onboarding flow
 - [ ] Error handling + loading states
 - [ ] SEO + meta tags
 - [ ] Analytics
+- [ ] Discord community setup
 
----
-
-## 9. Open Questions
-
-1. **Project connection method** — When a user provides their project path, how does the service access it? Options:
-   - Desktop companion app that runs locally and communicates with the web service
-   - CLI tool the user runs that syncs relevant project metadata
-   - Direct path input assumes the AI service has filesystem access (only works if user is running something locally)
-
-2. **Team features at launch?** — Ship Enterprise tier from day one, or start with Free + Pro and add teams later?
-
-3. **Domain** — wellversed.dev? wellversed.ai? getwellversed.com?
-
-4. **Beta strategy** — Invite-only launch, public beta, or waitlist?
+### Phase 6 — Post-Launch
+- [ ] Enterprise tier (team workspaces, seats, API keys)
+- [ ] Architecture review feature
+- [ ] Usage analytics dashboard for users
+- [ ] Public API (Enterprise)
