@@ -1,29 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Download, FolderOpen, MessageSquare } from "lucide-react";
+import { MessageSquare, Cpu, Eye } from "lucide-react";
 
 const steps = [
   {
-    icon: Download,
-    step: "01",
-    title: "Install the Companion App",
-    description:
-      "Download WellVersed for Windows. A lightweight app that securely connects your local UEFN project to our cloud platform.",
-  },
-  {
-    icon: FolderOpen,
-    step: "02",
-    title: "Connect Your Project",
-    description:
-      "Point WellVersed at your UEFN project directory. It indexes your files, Verse scripts, and device configurations instantly.",
-  },
-  {
     icon: MessageSquare,
-    step: "03",
-    title: "Start Building",
+    step: "01",
+    title: "Describe Your Game",
     description:
-      "Open your dashboard and start working. Generate scripts, validate configs, run QA — all with full context of your actual project.",
+      "Tell WellVersed what you want to build — game mode, mechanics, rules, biome. Natural language in the desktop app or Claude Code terminal.",
+  },
+  {
+    icon: Cpu,
+    step: "02",
+    title: "AI Generates Everything",
+    description:
+      "Devices placed with biome-aware layouts, Verse code written for your game logic, widgets designed for your HUD, wiring connected between devices.",
+  },
+  {
+    icon: Eye,
+    step: "03",
+    title: "Preview & Refine",
+    description:
+      "See your map in 3D, tweak device properties in the visual editor, adjust Verse code, then export to UEFN. Iterate until it plays exactly right.",
   },
 ];
 
@@ -33,11 +33,12 @@ export function HowItWorks() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Up and running in{" "}
-            <span className="text-accent">minutes</span>
+            From concept to{" "}
+            <span className="text-accent">creation</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            No complex setup. No SDK integration. Just install, connect, and go.
+            Three steps from game idea to playable map. No manual device
+            placement, no boilerplate Verse code, no widget XML.
           </p>
         </div>
 

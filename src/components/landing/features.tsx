@@ -2,57 +2,56 @@
 
 import { motion } from "framer-motion";
 import {
+  Map,
   Code2,
-  Settings2,
   LayoutGrid,
+  Puzzle,
+  Box,
   ShieldCheck,
-  Zap,
-  Users,
 } from "lucide-react";
 
 const features = [
   {
-    icon: Code2,
-    title: "Verse Script Generation",
+    icon: Map,
+    title: "Map Generation",
     description:
-      "Generate, refactor, and debug Verse scripts with full language-aware context. Not generic code — scripts that understand UEFN patterns.",
-    tier: "Free & Up",
-  },
-  {
-    icon: Settings2,
-    title: "Device Config Validation",
-    description:
-      "Analyze your in-level device setups, catch misconfigurations before they break your island, and get actionable fix suggestions.",
+      "Describe a game mode and get a complete map — devices placed, wiring connected, biome-aware layouts. Desert, forest, urban, snow — the AI builds it.",
     tier: "Pro",
   },
   {
-    icon: LayoutGrid,
-    title: "Procedural Level Assist",
+    icon: Code2,
+    title: "Verse Code Generation",
     description:
-      "AI-assisted procedural generation of level segments, layouts, and object populations. Build faster, iterate more.",
+      "15+ battle-tested templates plus custom AI-written Verse for any game mechanic. Scoring, rounds, abilities, UI bindings — production-ready code.",
+    tier: "Free & Up",
+  },
+  {
+    icon: LayoutGrid,
+    title: "Widget Blueprints",
+    description:
+      "Create UMG widgets — HUDs, scoreboards, menus, notifications — with a visual editor that outputs real .uasset files ready for UEFN.",
+    tier: "Pro",
+  },
+  {
+    icon: Puzzle,
+    title: "Device Recipes",
+    description:
+      "Pre-built multi-device patterns: Capture Points, Item Shops, Spawn Areas, Elimination Zones. Deploy complex setups with one click, fully wired.",
+    tier: "Pro",
+  },
+  {
+    icon: Box,
+    title: "3D Scene Preview",
+    description:
+      "See your generated map in 3D before opening UEFN. Verify device positions, check spatial relationships, and iterate without leaving WellVersed.",
     tier: "Pro",
   },
   {
     icon: ShieldCheck,
-    title: "Project-Aware QA",
+    title: "Project Safety",
     description:
-      "Automated quality checks across your entire project — logic errors, broken references, performance flags. Like a QA team on demand.",
-    tier: "Pro",
-  },
-  {
-    icon: Zap,
-    title: "Priority Processing",
-    description:
-      "Faster response times and higher usage limits for when deadlines matter and you need results now.",
-    tier: "Pro",
-  },
-  {
-    icon: Users,
-    title: "Team Collaboration",
-    description:
-      "Shared workspaces, team member seats, and project history. Built for studios working together on complex islands.",
-    tier: "Enterprise",
-    comingSoon: true,
+      "Copy-on-read file access, staged writes, automatic backups. Your project is always protected — WellVersed never modifies files without review.",
+    tier: "All Plans",
   },
 ];
 
@@ -74,12 +73,12 @@ export function Features() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Everything you need to ship{" "}
-            <span className="text-accent">faster</span>
+            From idea to{" "}
+            <span className="text-accent">playable map</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            WellVersed deeply understands your project — not just your code.
-            It reads your files, your configs, your structure.
+            WellVersed generates every layer of your UEFN project — devices,
+            Verse code, widgets, and wiring — from a single description.
           </p>
         </div>
 
@@ -102,7 +101,6 @@ export function Features() {
                 </div>
                 <span className="rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground">
                   {feature.tier}
-                  {feature.comingSoon && " — Soon"}
                 </span>
               </div>
               <h3 className="mt-4 text-lg font-semibold">{feature.title}</h3>

@@ -38,8 +38,9 @@ export function Waitlist() {
             <span className="text-accent">waitlist</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Be among the first to experience WellVersed. Founding members get
-            a permanent 30% discount and an exclusive Founder badge.
+            Be among the first to generate complete UEFN maps from descriptions.
+            Founding members get a permanent 30% discount and early access to
+            new generation capabilities.
           </p>
         </motion.div>
 

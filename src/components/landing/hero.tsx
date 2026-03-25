@@ -32,17 +32,17 @@ export function Hero() {
 
           {/* Headline */}
           <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-            Your UEFN development team,{" "}
+            Describe your game.{" "}
             <span className="bg-gradient-to-r from-accent to-purple-400 bg-clip-text text-transparent">
-              on demand
+              We build the map.
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            WellVersed is a project-aware AI platform purpose-built for UEFN.
-            Generate Verse scripts, validate device configs, run automated QA,
-            and ship better Fortnite experiences — faster.
+            WellVersed is an AI-powered UEFN studio that turns ideas into
+            complete, playable Fortnite maps. Devices placed, Verse code written,
+            widgets designed, wiring connected — all from a description.
           </p>
 
           {/* CTA */}
@@ -62,7 +62,7 @@ export function Hero() {
 
           {/* Social proof placeholder */}
           <p className="mt-12 text-sm text-muted-foreground">
-            Trusted by UEFN creators building the next generation of Fortnite experiences
+            AI trained on 92+ real UEFN projects. Desktop app + Claude Code MCP server.
           </p>
         </motion.div>
 
@@ -80,29 +80,32 @@ export function Hero() {
               <div className="h-3 w-3 rounded-full bg-yellow-500/60" />
               <div className="h-3 w-3 rounded-full bg-success/60" />
               <span className="ml-2 font-mono text-xs text-muted-foreground">
-                WellVersed — Project Analysis
+                WellVersed — Map Generation
               </span>
             </div>
             {/* Terminal body */}
             <div className="p-6 font-mono text-sm leading-relaxed">
               <div className="text-muted-foreground">
-                <span className="text-accent">$</span> Analyzing project:{" "}
-                <span className="text-foreground">MyIsland_v3</span>
+                <span className="text-accent">{'>'}</span>{" "}
+                <span className="text-foreground">Build a 4-team capture point game with 3 zones, item shop, and a desert biome</span>
               </div>
               <div className="mt-3 text-muted-foreground">
-                <span className="text-success">&#10003;</span> Scanned 47 Verse files, 182 device configurations
+                <span className="text-success">&#10003;</span> Generated desert biome layout with 3 capture zones
               </div>
               <div className="mt-1 text-muted-foreground">
-                <span className="text-success">&#10003;</span> Found 3 misconfigured trigger devices
+                <span className="text-success">&#10003;</span> Placed 24 devices — spawners, capture volumes, HUD controllers
               </div>
               <div className="mt-1 text-muted-foreground">
-                <span className="text-success">&#10003;</span> Detected 2 Verse scripts with unused event bindings
+                <span className="text-success">&#10003;</span> Wrote capture_manager.verse — scoring, zone control, round logic (186 lines)
               </div>
               <div className="mt-1 text-muted-foreground">
-                <span className="text-success">&#10003;</span> Generated optimized player_manager.verse (127 lines)
+                <span className="text-success">&#10003;</span> Created scoreboard widget — team scores, zone status, timer
+              </div>
+              <div className="mt-1 text-muted-foreground">
+                <span className="text-success">&#10003;</span> Wired Item Shop recipe — vending machine + item granters + currency
               </div>
               <div className="mt-3 text-accent">
-                Ready. 4 suggestions available →
+                Map ready. Open 3D preview or export to UEFN →
               </div>
             </div>
           </div>

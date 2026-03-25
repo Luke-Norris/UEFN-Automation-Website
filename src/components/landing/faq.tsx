@@ -7,39 +7,39 @@ import { cn } from "@/lib/utils";
 
 const faqs = [
   {
-    question: "What exactly does WellVersed do?",
+    question: "What can WellVersed generate?",
     answer:
-      "WellVersed is a project-aware AI platform built specifically for UEFN development. It connects to your local project files through a lightweight companion app, then provides intelligent assistance — from generating and debugging Verse scripts to validating device configurations and running automated quality checks across your entire project.",
+      "Complete UEFN maps with device placement, Verse code for game logic, UMG widget blueprints for UI, and device wiring. Describe a game mode — like a 4-team capture point match with an item shop — and WellVersed generates the devices, positions them with biome-aware layouts, writes the scoring and round logic in Verse, creates the scoreboard widget, and wires everything together.",
   },
   {
-    question: "How is this different from just using ChatGPT or Copilot?",
+    question: "Do I need UEFN experience?",
     answer:
-      "General AI tools don't understand UEFN projects. They can't read your .uasset files, don't know your device configurations, and have no context about your project structure. WellVersed's proprietary analysis engine deeply parses your actual project — it understands the relationships between your Verse scripts, devices, and level layout. The results are dramatically more accurate and useful.",
+      "WellVersed helps both experienced creators and newcomers, but it's currently optimized for people who already know UEFN. Experienced creators use it to 10x their workflow — skipping hours of manual device placement and boilerplate code. If you're new to UEFN, WellVersed can still generate working maps, but you'll get the most out of it once you understand the fundamentals.",
   },
   {
-    question: "Is my project data safe?",
+    question: "Is my project safe?",
     answer:
-      "Yes. The companion app runs locally on your machine and only sends project data to our servers when you actively request an analysis. We never store your full project files — only the metadata needed to provide results. All communication is encrypted end-to-end.",
+      "Safety is built into every layer. All file reads use copy-on-read — WellVersed never locks your source files. Modifications go through staged writes, so nothing changes until you review and approve. Every direct write creates an automatic backup. When UEFN is running, all writes are staged to a separate directory. Your project is always protected.",
   },
   {
-    question: "What are the system requirements?",
+    question: "How does the AI understand UEFN?",
     answer:
-      "The WellVersed companion app requires Windows 10 or later. It's extremely lightweight (~5MB) and runs in your system tray. You'll also need an active internet connection for the AI analysis features.",
+      "WellVersed's AI is trained on 92+ real UEFN projects, Epic's complete device schema library, and the Book of Verse language specification. It parses .uasset binary files directly, understands device property structures, knows which devices wire together, and generates valid Verse that compiles in UEFN.",
   },
   {
-    question: "Can I use WellVersed with my existing UEFN workflow?",
+    question: "What's the difference between the desktop app and the MCP server?",
     answer:
-      "Absolutely. WellVersed doesn't modify your project files or interfere with UEFN. It reads your project directory in real-time and provides suggestions through the web dashboard. You copy what you need, when you need it.",
+      "The WellVersed desktop app (built with Tauri) gives you a visual studio — 3D scene preview, widget editor, device inspector, wiring graph. The MCP server connects to Claude Code for AI-driven generation via natural language in your terminal. Both share the same generation engine. Use the app for visual editing and refinement, and the MCP server for rapid AI-driven creation.",
   },
   {
-    question: "What happens when I hit my usage limit?",
+    question: "Can it generate any game mode?",
     answer:
-      "On the Free plan, you'll see a prompt to upgrade once you've used your 50 monthly generations. On Pro, the 500 operation limit resets monthly. You can always upgrade mid-cycle, and unused operations don't roll over.",
+      "WellVersed currently supports common game modes — battle royale, elimination, capture the point, tycoon, deathrun, and more. For custom mechanics, the Verse code generation can write custom logic for almost any game system. Device recipes cover the most common multi-device patterns, and new recipes are being added regularly.",
   },
   {
-    question: "How do I get early access?",
+    question: "What about 3D assets and meshes?",
     answer:
-      "Join the waitlist below. We're rolling out access in waves — starting with experienced UEFN creators to ensure quality. Founding members get a permanent 30% discount on Pro and an exclusive Founder badge.",
+      "WellVersed positions devices and actors in 3D space and provides a preview with basic mesh representations. It works with Epic's built-in device library — the thousands of props, prefabs, and gameplay devices that ship with UEFN. Custom decorative asset creation (meshes, textures, materials) is an area we're actively improving.",
   },
 ];
 
